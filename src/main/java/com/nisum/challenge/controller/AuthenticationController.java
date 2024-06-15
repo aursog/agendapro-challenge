@@ -1,5 +1,6 @@
 package com.nisum.challenge.controller;
 
+import com.nisum.challenge.dto.request.AuthRequest;
 import com.nisum.challenge.dto.request.UserRequest;
 import com.nisum.challenge.dto.response.UserResponse;
 import com.nisum.challenge.service.AuthenticationService;
@@ -17,8 +18,8 @@ public class AuthenticationController {
   private final AuthenticationService authenticationService;
 
   @PostMapping("login")
-  public ResponseEntity<UserResponse> authenticateAndGetToken(@RequestBody UserRequest userRequest) {
-    return ResponseEntity.ok(authenticationService.authenticate(userRequest));
+  public ResponseEntity<UserResponse> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
+    return ResponseEntity.ok(authenticationService.authenticate(authRequest));
   }
 
   @PostMapping("signin")

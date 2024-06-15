@@ -7,7 +7,7 @@ CREATE TABLE users (
   updated_at timestamp with time zone,
   access_date timestamp with time zone,
   is_active boolean,
-  roles VARCHAR(500)
+  role VARCHAR(50) NOT NULL
 );
 
 CREATE INDEX idx_email on users(email);

@@ -6,6 +6,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,5 @@ public class Phone extends BaseEntityAudit {
   @Column
   private String countrycode;
   @ManyToOne
-  @JoinColumn(name = "user_uuid")
   private User user;
 }

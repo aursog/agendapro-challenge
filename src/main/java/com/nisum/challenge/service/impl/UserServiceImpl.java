@@ -1,7 +1,6 @@
 package com.nisum.challenge.service.impl;
 
 import com.nisum.challenge.dto.UserDto;
-import com.nisum.challenge.dto.UserInfoDetails;
 import com.nisum.challenge.dto.mappers.UserMapper;
 import com.nisum.challenge.dto.request.UserRequest;
 import com.nisum.challenge.exceptions.EmailExistsException;
@@ -31,7 +30,6 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserDetailsService userDetailsService() {
     return (username) -> userRepository.findByEmail(username)
-        .map(UserInfoDetails::new)
         .orElseThrow(() -> new UsernameNotFoundException("User not found"));
   }
 

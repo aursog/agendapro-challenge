@@ -5,6 +5,7 @@ import com.nisum.challenge.dto.UserDto;
 import com.nisum.challenge.dto.request.UserRequest;
 import com.nisum.challenge.dto.response.UserResponse;
 import com.nisum.challenge.model.Phone;
+import com.nisum.challenge.model.Role;
 import com.nisum.challenge.model.User;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,11 +23,13 @@ public class UserMapper {
   }
 
   public static User fromRequestToEntity(UserRequest userRequest) {
-    User user = new User();
-    user.setName(userRequest.name());
-    user.setEmail(userRequest.email());
-    user.setPassword(userRequest.password());
-    return user;
+    return User.builder()
+        .name(userRequest.name())
+        .email(userRequest.email())
+        .password(userRequest.password())
+        .role(Role.USER)
+        .isActive(true)
+        .build();
   }
 
   public static UserDto toDto(User entity) {
