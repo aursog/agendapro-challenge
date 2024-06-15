@@ -21,9 +21,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
   @Override
   public UserResponse create(UserRequest userRequest) {
-    User user = userService.createUser(userRequest);
-    String jwt = jwtService.generateToken(userRequest.email());
-    return UserMapper.fromEntityToResponse(user, jwt);
+    return UserMapper.fromEntityToResponse(
+        userService.create(userRequest),
+        jwtService.generateToken(userRequest.email())
+    );
   }
 
   @Override

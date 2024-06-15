@@ -1,23 +1,21 @@
 package com.nisum.challenge.service.impl;
 
+import com.nisum.challenge.dto.UserDto;
 import com.nisum.challenge.dto.UserInfoDetails;
 import com.nisum.challenge.dto.mappers.UserMapper;
 import com.nisum.challenge.dto.request.UserRequest;
-import com.nisum.challenge.dto.response.UserResponse;
 import com.nisum.challenge.exceptions.EmailExistsException;
 import com.nisum.challenge.exceptions.PasswordValidationException;
 import com.nisum.challenge.model.Phone;
 import com.nisum.challenge.model.User;
 import com.nisum.challenge.repository.PhoneRepository;
 import com.nisum.challenge.repository.UserRepository;
-import com.nisum.challenge.service.AuthenticationService;
 import com.nisum.challenge.service.UserService;
 import com.nisum.challenge.utils.PasswordValidator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -32,18 +30,13 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDetailsService userDetailsService() {
-    return new UserDetailsService() {
-      @Override
-      public UserDetails loadUserByUsername(String username) {
-        return userRepository.findByEmail(username)
-            .map(UserInfoDetails::new)
-            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-      }
-    };
+    return (username) -> userRepository.findByEmail(username)
+        .map(UserInfoDetails::new)
+        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
   }
 
   @Override
-  public User createUser(UserRequest userRequest) {
+  public User create(UserRequest userRequest) {
     if (this.userRepository.findByEmail(userRequest.email()).isPresent())
       throw new EmailExistsException("El correo ya se encuentra registrado");
 
@@ -60,16 +53,16 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public List<UserResponse> getUser() {
+  public List<UserDto> list() {
     return this.userRepository.findAll()
-        .stream().map(it -> UserMapper.fromEntityToResponse(it, null))
+        .stream().map(UserMapper::toDto)
         .collect(Collectors.toList());
   }
 
   @Override
-  public UserResponse getUser(UUID uuid) {
+  public UserDto get(UUID uuid) {
     return this.userRepository.findById(uuid)
-        .map(it -> UserMapper.fromEntityToResponse(it, ""))
+        .map(UserMapper::toDto)
         .orElseThrow(() -> new UsernameNotFoundException("User not found " + uuid));
   }
 

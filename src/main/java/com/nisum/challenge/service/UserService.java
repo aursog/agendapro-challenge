@@ -1,5 +1,6 @@
 package com.nisum.challenge.service;
 
+import com.nisum.challenge.dto.UserDto;
 import com.nisum.challenge.dto.request.UserRequest;
 import com.nisum.challenge.dto.response.UserResponse;
 import com.nisum.challenge.model.User;
@@ -9,9 +10,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService {
 
-  User createUser(UserRequest userRequest);
-  List<UserResponse> getUser();
-  UserResponse getUser(UUID uuid);
+  User create(UserRequest userRequest);
+  List<UserDto> list();
+  UserDto get(UUID uuid);
   UserDetailsService userDetailsService();
   User loadUserByUsername(String username);
 }
