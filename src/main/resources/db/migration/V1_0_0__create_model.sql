@@ -57,7 +57,6 @@ CREATE TABLE product (
 );
 
 CREATE INDEX idx_sku on product(sku);
-CREATE INDEX idx_name ON product(descripcion);
 
 ALTER TABLE product
   ADD CONSTRAINT fk_product_unidad

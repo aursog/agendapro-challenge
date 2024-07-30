@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.ForwardedHeaderFilter;
 
 @Configuration
-@OpenAPIDefinition(info = @Info(title = "Technical Challenge - Nisum", description = "Technical challenge for Backend Java position in Nisum", version = "v1", license = @License(name = "Anggelo Urso", url = "https://github.com/aursog")))
+@OpenAPIDefinition(info = @Info(title = "Technical Challenge - AgendaPro", description = "Technical challenge for Backend Java position in AgendaPro", version = "v1", license = @License(name = "Anggelo Urso", url = "https://github.com/aursog")))
 public class SwaggerConfig {
   // Access local: http://localhost:8080/swagger-ui/index.html
   @Bean

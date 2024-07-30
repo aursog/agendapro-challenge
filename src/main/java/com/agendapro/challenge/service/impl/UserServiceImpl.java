@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
       throw new EmailExistsException("El correo ya se encuentra registrado");
 
     if (!passwordValidator.validatePassword(userRequest.password()))
-      throw new PasswordValidationException("La contraseña es inválida");
+      throw new PasswordValidationException("Contraseña es inválida, mínimo 8 caracteres hasta máximo 20. Debe tener mayúsculas, números y caracteres especiales tales como (e.g., @, #, $, %, ^, &, +, =)");
 
     User user = userRepository.save(UserMapper.fromRequestToEntity(userRequest));
 

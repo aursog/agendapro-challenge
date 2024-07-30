@@ -45,8 +45,9 @@ dependencies {
 
     // databases
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.flywaydb:flyway-core'
-    runtimeOnly 'com.h2database:h2:2.2.220'
+    implementation 'org.flywaydb:flyway-core:10.16.0'
+    runtimeOnly 'org.flywaydb:flyway-database-postgresql:10.16.0'
+    runtimeOnly 'org.postgresql:postgresql'
 
     // annotation lombok
     compileOnly 'org.projectlombok:lombok'
