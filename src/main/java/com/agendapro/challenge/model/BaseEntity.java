@@ -8,10 +8,10 @@ import jakarta.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
-import lombok.Getter;
+import lombok.Data;
 
 @MappedSuperclass
-@Getter
+@Data
 public abstract class BaseEntity implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)

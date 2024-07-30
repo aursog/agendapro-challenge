@@ -5,7 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Index;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Entity
@@ -14,6 +16,7 @@ import lombok.RequiredArgsConstructor;
     indexes = @Index(name = "idx_sku", columnList = "sku")
 )
 @Getter
+@Builder
 @RequiredArgsConstructor
 public class Product extends BaseEntityAudit {
   @Column

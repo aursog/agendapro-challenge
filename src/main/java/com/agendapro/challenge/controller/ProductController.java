@@ -6,6 +6,7 @@ import com.agendapro.challenge.service.ProductService;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,23 +26,24 @@ public class ProductController {
   private ProductService productService;
 
   @GetMapping("/{uuid}")
-  public ResponseEntity<ProductDto> getProduct(@PathVariable("uuid") UUID uuid) {
+  public ResponseEntity<ProductDto> getProduct(@PathVariable("uuid") String uuid) {
     return ResponseEntity.ok(productService.getByUuid(uuid));
   }
 
   @PostMapping
   public ResponseEntity<ProductDto> save(@RequestBody ProductRequest body) {
-    return null;
+    return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(body));
   }
 
   @PatchMapping("/{uuid}")
-  public ResponseEntity<ProductDto> update(@RequestBody ProductRequest body, @PathVariable("uuid") UUID uuid) {
-    return null;
+  public ResponseEntity<ProductDto> update(@RequestBody ProductRequest body, @PathVariable("uuid") String uuid) {
+    return ResponseEntity.ok(productService.update(uuid, body));
   }
 
   @DeleteMapping("/{uuid}")
-  public ResponseEntity<ProductDto> delete(@PathVariable("uuid") UUID uuid) {
-    return null;
+  public ResponseEntity<String> delete(@PathVariable("uuid") String uuid) {
+    productService.delete(uuid);
+    return ResponseEntity.ok("success");
   }
 
   @GetMapping
