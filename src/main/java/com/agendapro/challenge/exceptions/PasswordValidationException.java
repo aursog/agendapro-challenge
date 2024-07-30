@@ -1,0 +1,7 @@
+package com.agendapro.challenge.exceptions;
+
+public class PasswordValidationException extends RuntimeException {
+  public PasswordValidationException(String message) {
+    super(message);
+  }
+}
