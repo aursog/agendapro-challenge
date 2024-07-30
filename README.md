@@ -56,13 +56,13 @@ To install and run this project do you need to do this:
 1. Clone this repository to your local machine
 
 ```bash
-git clone git@github.com:aursog/nisum-challenge.git
+git clone git@github.com:aursog/agendapro-challenge.git
 ```
 
 2. Navigate to the project directory
 
 ```bash
-cd nisum-challenge
+cd agendapro-challenge
 ```
 
 3. If you don't have installed java, you can install through _sdkman_
