@@ -1,15 +1,19 @@
-# Java Backend Technical Test
+# AgendaPro - Java Backend Technical Test
 
-This test is designed to assess your knowledge and skills in backend development.
+Resolución de test para posición de Java Backend Senior. 
 
-## Description
+## Descripción
 
-The API is designed create and consulting users in a H2 in-memory database, with all the security aspects related. This API is 
-build as a RESTFul API with JWT. 
+Esta API está diseñada para crear y consultar sobre un listado de productos, los cuales serán almacenados en una base de datos 
+PostgreSQL.
+
+Para eso se implementó un mecanismo de autenticación y uso de recursos a través de JWT para proporcionar seguridad de datos restringidos.
+
+Se agrega como parte de la documentación, el acceso a plataforma Swagger/OpenApi3 para acceder a los recursos del sistema y poder probar.
 
 ## Features
 
-- Create a user according to defined structure in document
+- Crear un usuario de acuerdo con la siguiente estructura:
 
 ```json
 {
@@ -25,16 +29,31 @@ build as a RESTFul API with JWT.
     ]
 }
 ```
+- La constraseña deberá seguir las siguientes restricciones.
+  - Largo entre 8 y 20 caracteres.
+  - A lo menos una mayúscula.
+  - A lo menos un número.
+  - A lo menos un caracter especial (ej: @, #, $, %, ^, &, +, =)
+- Almacenamiento en base de datos PostgreSQL
+- End-point sin requerir autenticación o un JWT: 
+    - Crear un nuevo usuario y creación del respectivo JWT.
+    - Login de un usuario existente.
+    - Ping (```http://localhost:8080/ping```)
+    - Actuator (```http://localhost:8080/actuator```)
+- End-point con JWT requerido:
+  - Listar todos los usuarios registrados en la base de datos
+  - Obtener a un usuario específico vía UUID.
+  - Listado de todas las categorias y unidades.
+  - Listado de una categoría específica o una unidad específica (vía UUID).
+  - Creación de categorías y unidades.
+  - Listado de todos los productos registrados.
+  - Obtención de un producto específico vía UUID.
+  - Creación de un producto.
+  - Eliminación de un producto
+  - Actualización de un producto.
 
-- Data storage in a in-memory H2 database.
-- End-points for the following features:
-    - Create or **signin** a new user gettin the corresponding jwt.
-    - Login an existing user.
-    - Get an specific user through the UUID.
-    - Get all the users registered in the database.
-- Requires authentication via a JWT token to access the endpoints.
 
-## Technologies used
+## Tecnologías usadas
 
 - Java 17 (developed with 17.0.6-zulu)
 - Spring Boot 3.3.0
@@ -49,23 +68,23 @@ Other libraries:
 - Faker 1.0.2
 - Lombok
 
-## Instalation
+## Instalación
 
-To install and run this project do you need to do this:
+Para instalar y ejecutar el proyecto se requiere lo siguiente:
 
-1. Clone this repository to your local machine
+1. Clonar este repositorio en tu máquina local
 
 ```bash
 git clone git@github.com:aursog/agendapro-challenge.git
 ```
 
-2. Navigate to the project directory
+2. Navegar al directorio del proyecto.
 
 ```bash
 cd agendapro-challenge
 ```
 
-3. If you don't have installed java, you can install through _sdkman_
+3. Si no tienes instalado **java** puedes instalarlo a través de _sdkman_
 
 ```bash
 # To install sdkman
@@ -75,31 +94,31 @@ curl -s "https://get.sdkman.io" | bash
 sdk install java 17.0.6-zulu
 ```
 
-4. Run the following command to build the project:
+4. Ejecutar el siguiente comando para hacer **build** el proyecto:
 
 ```bash
 ./gradlew build
 ```
 
-5. Once the build is successful, run the following command to start the application:
+5. Una vez que el **build** ha ejecutado correctamente, correr el siguiente comando para ejecutar la aplicación:
 
 ```bash
 ./gradlew bootRun
 ```
 
-This will start the application on port **8080** and the application is ready to use
+Esto correrá la aplicación en el puerto **8080** y la aplicación quedará lista para ejecutar.
 
-## Run test and coverage report
+## Ejecución de test y test report
 
-For execute the unit test, you need to run the following command:
+Para ejecutar los test unitarios, deberán ejecutar los siguientes comandos:
 
 ```bash
 ./gradlew test jacocoTestReport
 ```
 
-With this command the application run all the test defined on the code and generate the test report and the coverage.
+Con este comando la aplicación correrá todos los test definidos y generará el test report y cobertura de test.
 
-For test propose I exclude the following packages:
+Para propositos de pruebas se han excluidos los siguientes paquetes:
 
 ```gradle
 fileTree(dir: it,
@@ -114,25 +133,36 @@ fileTree(dir: it,
 )
 ```
 
-The task execute jacoco to build a html report find in: **build/reports/test/index.html**
+La **task** ejecutará _jacoco_ para construir el reporte **html** que se puede encontrar en: **build/reports/test/index.html**
 
-## How to use
+## Cómo usar
 
-For use this application, the easiest way to test is through the swagger end-point:
+Para usar esta aplicación, lo más fácil es a través de los end-point de swagger:
 
 ```bash
 http://localhost:8080/swagger-ui/index.html
 ```
 
-Here you can found the different end-points, included the generation token end-point, the salut controller and the rest of the end-points
+Acá se podrá encontrar los diferentes end-points, incluidos la generación de end-point con uso de token. 
 
-Here is a list of end-points, goals and expected response (all the end-points run over http://localhost:8080/):
+Acá esta la lista de end-point, objetivos y respuesta esperada (todos los end-point se ejecutan sobre: http://localhost:8080/):
 
-| End-point     | Description                                                                                                                                                | Expected Response                                                    |
-|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
-| /ping         | GET Ping controller                                                                                                                                        | pong!                                                                |
-| /auth/signin  | POST User creation and token generation. To create a new user, you need to send the information according to the defined object in the body of the request | JSON Object (uuid, createdAt, updatedAt, lastLogin, token, isActive) |
-| /auth/login   | POST end-point to login in the system with the user credentials sended in the body request (email, password)                                               | JSON Object (uuid, createdAt, updatedAt, lastLogin, token, isActive) |
-| /user         | GET List all the users in the database                                                                                                                     | JSON Object (List<JsonObject(uuid, email, name, phones)>)            |
-| /user/${uuid} | GET end-point to get information about an specific user defined by his UUID                                                                                 | JSON Object (uuid, email, name, phones)                              |
-| /actuator/*   | GET actuator information: health, info, etc. This end-point is used to retrieve information about the application                                          | JSON Object                                                          |
+| End-point        | Description                                                                                                                                                                    | Expected Response                                                                                                        |
+|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| /ping            | GET Ping controller                                                                                                                                                            | pong! (```String```)                                                                                                     |
+| /auth/signin     | POST User creation and token generation. To create a new user, you need to send the information according to the defined object in the body of the request                     | JSON Object (uuid, createdAt, updatedAt, lastLogin, token, isActive)                                                     |
+| /auth/login      | POST end-point to login in the system with the user credentials sended in the body request (email, password)                                                                   | JSON Object (uuid, createdAt, updatedAt, lastLogin, token, isActive)                                                     |
+| /user            | GET List all the users in the database                                                                                                                                         | JSON Object (List<JsonObject(uuid, email, name, phones)>)                                                                |
+| /user/{uuid}     | GET end-point to get information about an specific user defined by his UUID                                                                                                    | JSON Object (uuid, email, name, phones)                                                                                  |
+| /category        | GET List all the categories registered on the database                                                                                                                         | List<JSON Object> (List<JsonObject(uuid, description)> )                                                                 |
+| /category/{uuid} | GET a single category registered on the database                                                                                                                               | JSON Object (uuid, description)                                                                                          |
+| /category        | POST create a new category on the system. Body request (JsonObject(description))                                                                                               | JSON Object (uuid, description)                                                                                          |
+| /unidad          | GET List all the unidad registered on the database                                                                                                                             | List<JSON Object> (List<JsonObject(uuid, description)>)                                                                  |
+| /unidad/{uuid}   | GET a single unidad on the database                                                                                                                                            | JSON Object (uuid, description)                                                                                          |
+| /unidad          | POST create a new unidad on the system. Body request (JsonObject(description))                                                                                                 | JSON Object (uuid, description)                                                                                          |
+| /producto        | GET List of all product recorded on the system                                                                                                                                 | List<JSON Object> (List<JsonObject(uuid, sku, descripcion, category, version, unidad, loteable, imagenUrl, comentario)>) |
+| /producto/{uuid} | GET a single producto recorded on the system                                                                                                                                   | JSON Object (uuid, sku, descripcion, category, version, unidad, loteable, imagenUrl, comentario)                         |
+| /producto        | POST create a new producto on the system. Body request (JsonObject(sku, descripcion, category<String>, version, unidad<String>, loteable, imagenUrl, comentario))              | JSON Object (uuid, sku, descripcion, category, version, unidad, loteable, imagenUrl, comentario)                         |
+| /producto/{uuid} | PATCH Edit a single producto recorded on the database. Body request (JsonObject(sku, descripcion, category<String>, version, unidad<String>, loteable, imagenUrl, comentario)) | JSON Object (uuid, sku, descripcion, category, version, unidad, loteable, imagenUrl, comentario)                         |
+| /producto/{uuid} | DELETE Delete a single producto recorded on the database.                                                                                                                      | success ```String```                                                                                                        | 
+| /actuator/*      | GET actuator information: health, info, etc. This end-point is used to retrieve information about the application                                                              | JSON Object                                                                                                              |
