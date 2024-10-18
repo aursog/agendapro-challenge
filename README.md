@@ -166,3 +166,7 @@ Acá esta la lista de end-point, objetivos y respuesta esperada (todos los end-p
 | /producto/{uuid} | PATCH Edit a single producto recorded on the database. Body request (JsonObject(sku, descripcion, category<String>, version, unidad<String>, loteable, imagenUrl, comentario)) | JSON Object (uuid, sku, descripcion, category, version, unidad, loteable, imagenUrl, comentario)                         |
 | /producto/{uuid} | DELETE Delete a single producto recorded on the database.                                                                                                                      | success ```String```                                                                                                        | 
 | /actuator/*      | GET actuator information: health, info, etc. This end-point is used to retrieve information about the application                                                              | JSON Object                                                                                                              |
+
+Changelog
+
+Changelog from git meeting
